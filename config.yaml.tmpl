@@ -1,0 +1,18 @@
+harbor:
+  url: "https://harbor.example.com"
+  user: "USERNAME"
+  password_env_var: "HARBOR_PASSWORD"
+  client_id: "OICDCLIENTNAME"
+  client_secret_env: "HARBOR_CLIENT_SECRET"
+  oidc_login: True
+  oidc_endpoint: "https://keycloak.example.com/auth/realms/real/protocol/openid-connect/token"
+dojo:
+  url: "https://dojo.example.com"
+  user_id: 1
+  token_env_var: "DOJO_TOKEN"
+  docker_images_product_id: 1
+hook:
+  auth_token_env_var: "HOOK_AUTH_TOKEN"
+  host: 0.0.0.0 
+  port: 4444
+  debug: False

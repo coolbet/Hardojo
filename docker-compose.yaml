@@ -1,0 +1,16 @@
+version: '2.3'                                      
+services:                                         
+  hardojo:                                                                                                   
+    image: hardojo:latest                                                                   
+    container_name: hardojo                      
+    restart: always                           
+    volumes:
+        - ./config.yaml:/app/config.yaml
+    env_file:
+      - hardojo.env
+    ports:                    
+      # Change this if you need to bind on a different address.
+      # Remove for 0.0.0.0
+      - 127.0.0.1:4444:4444                                                                 
+volumes:
+    config.yaml:
