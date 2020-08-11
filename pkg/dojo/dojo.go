@@ -388,3 +388,24 @@ func (d DojoInstance) SubmitFindings(Test int, Finding harbor.Vulnerability, End
 	log.Error("Failed to create Finding.")
 	return 0, errors.New("Response from Finding endpoint did not contain a valid ID")
 }
+
+func (d DojoInstance) CloseEngagement(engagementID int) error {
+	ApiUrl := fmt.Sprintf("%v/api/v2/engagements/%v/close/", d.Url, engagementID)
+	httpClient := http.Client{}
+	req, err := http.NewRequest(http.MethodGet, ApiUrl, nil)
+	if err != nil {
+		log.Error(err)
+		return errors.New("Failure to prepare a request to Dojo endpoint URL")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("Token %v", d.ApiKey))
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		log.Error(getErr)
+		return errors.New("Request to Dojo endpoint URL failed")
+	}
+	if res.StatusCode != 200 {
+		return errors.New("Failure to close the engagement.")
+	}
+	return nil
+}

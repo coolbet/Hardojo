@@ -7,9 +7,10 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type PostHandler struct {
@@ -141,6 +142,10 @@ func (c PostHandler) WebhookHandler(w http.ResponseWriter, req *http.Request) {
 	for _, vuln := range vulnData.Vulnerabilities {
 		workload := VulnerabilityWorkload{TestID, vuln, EndpointID}
 		c.workloads <- workload
+	}
+	engagementErr = c.dojo.CloseEngagement(EngagementID)
+	if engagement != nil {
+		log.Error(engagmentErr)
 	}
 }
 
