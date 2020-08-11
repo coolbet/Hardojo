@@ -144,8 +144,8 @@ func (c PostHandler) WebhookHandler(w http.ResponseWriter, req *http.Request) {
 		c.workloads <- workload
 	}
 	engagementErr = c.dojo.CloseEngagement(EngagementID)
-	if engagement != nil {
-		log.Error(engagmentErr)
+	if engagementErr != nil {
+		log.Error(engagementErr)
 	}
 }
 
