@@ -405,6 +405,10 @@ func (d DojoInstance) CloseEngagement(engagementID int) error {
 		return errors.New("Request to Dojo endpoint URL failed")
 	}
 	if res.StatusCode != 200 {
+		log.WithFields(log.Fields{
+			"Status Code":   res.StatusCode,
+			"Engagement ID": engagementID,
+		}).Error("Failed to close Engagement")
 		return errors.New("Failure to close the engagement.")
 	}
 	return nil
