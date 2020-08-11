@@ -410,6 +410,10 @@ func (d DojoInstance) CloseEngagement(engagementID int) error {
 			"Engagement ID": engagementID,
 		}).Error("Failed to close Engagement")
 		return errors.New("Failure to close the engagement.")
+	} else {
+		log.WithFields(log.Fields{
+			"ID": engagementID,
+		}).Info("Successfully Closed Engagement")
 	}
 	return nil
 }
