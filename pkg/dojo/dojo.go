@@ -392,7 +392,7 @@ func (d DojoInstance) SubmitFindings(Test int, Finding harbor.Vulnerability, End
 func (d DojoInstance) CloseEngagement(engagementID int) error {
 	ApiUrl := fmt.Sprintf("%v/api/v2/engagements/%v/close/", d.Url, engagementID)
 	httpClient := http.Client{}
-	req, err := http.NewRequest(http.MethodGet, ApiUrl, nil)
+	req, err := http.NewRequest(http.MethodPost, ApiUrl, nil)
 	if err != nil {
 		log.Error(err)
 		return errors.New("Failure to prepare a request to Dojo endpoint URL")
