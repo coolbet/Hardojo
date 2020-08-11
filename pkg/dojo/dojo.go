@@ -7,11 +7,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type DojoInstance struct {
@@ -164,13 +165,14 @@ func (d DojoInstance) CreateEndpoint(resourceUrl string) (int, error) {
 		return 0, errors.New("Request to Dojo endpoint URL failed")
 	}
 	defer res.Body.Close()
+	body, readErr := ioutil.ReadAll(res.Body)
 	if res.StatusCode != 201 {
 		log.WithFields(log.Fields{
 			"Status Code": res.StatusCode,
+			"Content":     body,
 		}).Error("Failed to create endpoint")
 		return 0, errors.New("Request to create a new Endpoint failed with a non-201 status code")
 	}
-	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
 		log.Error(readErr)
 		return 0, errors.New("Failure to read response body from Endpoint URL")
@@ -221,13 +223,14 @@ func (d DojoInstance) CreateEngagement(FullImageName string) (int, error) {
 		return 0, errors.New("Request to Dojo Engagement URL failed.")
 	}
 	defer res.Body.Close()
+	body, readErr := ioutil.ReadAll(res.Body)
 	if res.StatusCode != 201 {
 		log.WithFields(log.Fields{
 			"Status Code": res.StatusCode,
+			"Content":     body,
 		}).Error("Failed to create engagement")
 		return 0, errors.New("Request to Engagement URL failed with a non-201 status code")
 	}
-	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
 		log.Error(readErr)
 		return 0, errors.New("Failed to read the response body from Engagement URL")
